@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-pyspark-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-pyspark
+  template:
+    metadata:
+      labels:
+        app: hello-world-pyspark
+    spec:
+      containers:
+      - name: hello-world-pyspark
+        image: hello-world-pyspark
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
