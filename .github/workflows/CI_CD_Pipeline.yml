@@ -24,20 +24,19 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t $IMAGE_NAME .
+        docker build -t ${{ secrets.DOCKER_REGISTRY }}/$IMAGE_NAME .
         docker tag $IMAGE_NAME $DOCKER_REGISTRY/$IMAGE_NAME
         docker push $DOCKER_REGISTRY/$IMAGE_NAME
       env:
         IMAGE_NAME: hello-world-pyspark
-        DOCKER_REGISTRY: your-docker-registry
 
     - name: Set up kubectl
       uses: azure/setup-kubectl@v3
-      with:
-        version: 'v1.20.0'
+
 
     - name: Deploy to Kubernetes
       run: |
+        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
         kubectl apply -f deployment.yaml --namespace default
         kubectl rollout status deployment/hello-world-pyspark-deployment --namespace default
       env:
