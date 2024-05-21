@@ -38,10 +38,6 @@ jobs:
     - name: Set up kubectl
       uses: azure/setup-kubectl@v3
 
-    - name: Print Kubeconfig for debugging
-      run: |
-        echo "${{ secrets.KUBECONFIG }}"
-
     - name: Deploy to Kubernetes
       run: |
         echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
