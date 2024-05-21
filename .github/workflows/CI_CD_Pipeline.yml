@@ -38,9 +38,17 @@ jobs:
     - name: Set up kubectl
       uses: azure/setup-kubectl@v3
 
-    - name: Deploy to Kubernetes
+    - name: Print Kubeconfig for debugging
       run: |
         echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+        kubectl config view
+
+    - name: Test Kubernetes Connection
+      run: |
+        kubectl get nodes
+
+    - name: Deploy to Kubernetes
+      run: |
         kubectl apply -f deployment.yaml --namespace default
         kubectl rollout status deployment/hello-world-pyspark-deployment --namespace default
       env:
