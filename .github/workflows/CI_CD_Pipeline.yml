@@ -40,7 +40,7 @@ jobs:
 
     - name: Print Kubeconfig for debugging
       run: |
-        echo "${{ secrets.KUBECONFIG }}" | head -n 10
+        echo "${{ secrets.KUBECONFIG }}"
 
     - name: Deploy to Kubernetes
       run: |
